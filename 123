@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Card</title>
+
+  <style>
+    /* ===== 基本重置 ===== */
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f2f2f2;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Noto Sans TC", sans-serif;
+    }
+
+    /* ===== 場景 ===== */
+    .scene {
+      perspective: 1200px;
+    }
+
+    /* ===== 卡片 ===== */
+    .card {
+      width: 320px;        /* 🔴 卡片寬度 */
+      height: 220px;       /* 🔴 卡片高度（依你的作品調） */
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      cursor: pointer;
+    }
+
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    /* ===== 正反面 ===== */
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+    }
+
+    .card-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* 🔥 不變形、不裁切 */
+      display: block;
+    }
+
+    .front {
+      transform: rotateY(0deg);
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    /* ===== 點擊提示（可刪） ===== */
+    .hint {
+      position: fixed;
+      bottom: 24px;
+      font-size: 14px;
+      color: #666;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="scene">
+    <div class="card" id="card">
+      <div class="card-face front">
+        <!-- 🔽 正面圖片 -->
+        <img src="https://picsum.photos/600/400" alt="front" />
+      </div>
+      <div class="card-face back">
+        <!-- 🔽 背面圖片 -->
+        <img src="https://picsum.photos/600/400?random=2" alt="back" />
+      </div>
+    </div>
+  </div>
+
+  <div class="hint">點擊卡片翻面</div>
+
+  <script>
+    const card = document.getElementById("card");
+
+    card.addEventListener("click", () => {
+      card.classList.toggle("is-flipped");
+    });
+  </script>
+
+</body>
+</html>
